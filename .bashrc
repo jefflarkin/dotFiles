@@ -14,7 +14,9 @@ fi
 if [ -f $HOME/.bash_aliases ] ; then
   . $HOME/.bash_aliases
 fi
-if [ -f $HOME/scripts/bash_completion ] ; then
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+elif [ -f $HOME/scripts/bash_completion ] ; then
   . $HOME/scripts/bash_completion
 fi
 
