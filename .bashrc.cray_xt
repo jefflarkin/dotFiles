@@ -1,0 +1,41 @@
+# make sure we have the latest vim
+module load vim/7.1 subversion mercurial git
+
+if [ -d $HOME/sw/xt/bin ] ; then
+  export PATH=$PATH:$HOME/sw/xt/bin
+fi
+
+OS_REL=$(echo $OS_DIR | awk "/./ { split(\$0,tmp,\"/\"); printf tmp[4]}")
+
+export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007";echo -ne $green ; date +"%x %r ($PE_ENV)"; echo -ne "$NC"'
+
+# Shortcuts to work areas
+export SCR="/scratch/$USER"
+export WORK="/tmp/work/$USER"
+export H=$HOME S=$SCR W=$WORK h=$H s=$S w=$W
+
+# For NCCS Test Harness
+export HARNESS_PATH=/ccs/proj/scgs/NCCS_RTP_PBS_PATH_FIX/pbs_path_fix/applications/nccs/JaguarCNL
+export RGT_PBS_JOB_ACCNT_ID=VEN008
+
+# -target=linux seems to be broken, this fixes it.
+export XTPE_INFO_MESSAGE_OFF=1
+
+# XT aliases
+alias xts=xtnodestat
+alias qa='qstat'
+alias xa='xtnodestat | grep "Available compute nodes:"'
+#alias ql='qstat -a -u $USER'
+alias ql='qstat -u $USER | awk "/^[0-9]/ {printf \"%12s %20s %6s %5s %1s %5s\n\", \$1, \$4, \$7, \$9, \$10, \$11 }"'
+alias qlc="ql | grep $USER | sed = | sed 'N; s/^/     /; s/ *\(.\{6,\}\)\n/\1  /'"
+alias ss='showstart'
+alias cj=checkjob
+alias showql='showq -w user=$USER'
+alias stripfs='sed -i "/FORTRAN STOP/d" $1'
+alias ssl='myss.sh'
+alias loaddt='module use /ccs/proj/ompi/modules;module load openmpi/ompi-dt-gnu-pgi-fortran'
+alias csc="cd $S"
+alias clu="cd $W"
+alias cdw="cd $W"
+
+export CDPATH=.:$HOME:/tmp/work/$USER:..
