@@ -99,7 +99,9 @@ export PATH=$GEM_HOME/bin:$PATH
 
 # Load Architecture and Machine-specific files
 if [ -d /proc/cray_xt ] ; then
-  . $HOME/.bashrc.cray_xt
+  if [ ! -f $(which mtarun) ] ; then
+    . $HOME/.bashrc.cray_xt
+  fi
 fi
 if [ -f $HOME/.bashrc.$MACHINE ]; then
   . $HOME/.bashrc.$MACHINE
