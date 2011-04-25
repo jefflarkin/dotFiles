@@ -28,6 +28,8 @@ alias tlast='tail `ls -1t | head -n 1`'
 alias llast='less `ls -1t | head -n 1`'
 alias last='ls -1t | head -n 1'
 alias cdl='cd `ls -1t | head -n 1`'
+alias td=todo.sh
+alias be='$HOME/downloads/git-todo.py/birdseye.py $TODO_FILE $DONE_FILE'
 
 VIM=`which vim`
 if [ -x $VIM ] ; then

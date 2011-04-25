@@ -6,8 +6,19 @@
 " 2000 Jun  1: for `Vim' 5.6
 " first clear any existing autocommands:
 autocmd!
+"colors "torte"
+let fortran_free_source=1
+unlet! fortran_fixed_source
+let fortran_fold=1
+let fortran_fold_conditionals=1
+let fortran_fold_multilinecomments=1
+let fortran_more_precise=1
+let fortran_do_enddo=1
+map <Up> gk
+map <Down> gj
+set lbr
 
-" * User Interface
+"* User Interface
 
 " have syntax highlighting in terminals which can display colours:
 if has('syntax') && (&t_Co > 2)
@@ -51,7 +62,6 @@ set nomodeline
 " don't make it look like there are line breaks where there aren't:
 " set nowrap
 
-" use indents of 2 spaces, and have them copied down lines:
 set shiftwidth=2
 set shiftround
 set expandtab
@@ -81,6 +91,7 @@ set comments+=n::
 
 " enable filetype detection:
 filetype on
+filetype plugin on
 
 " recognize anything in my .Postponed directory as a news article, and anything
 " at all with a .txt extension as being human-language text [this clobbers the
@@ -88,12 +99,16 @@ filetype on
 " properly]:
 augroup filetype
   autocmd BufNewFile,BufRead */.Postponed/* set filetype=mail
-  autocmd BufNewFile,BufRead *.txt set filetype=human
+  autocmd BufNewFile,BufRead *.txt set filetype=human formatoptions+=ta
+  autocmd BufNewFile,BufRead *.mkdn set filetype=mk formatoptions+=tad
+  autocmd BufNewFile,BufRead *.mkd set filetype=mk formatoptions+=tad
   autocmd BufNewFile,BufRead *.cu set filetype=cpp
+  autocmd BufNewFile,BufRead *.cuf set filetype=fortran
+  autocmd BufNewFile,BufRead *.CUF set filetype=fortran
 augroup END
 
 " in human-language files, automatically format everything at 72 chars:
-autocmd FileType mail,human set formatoptions+=t textwidth=72
+autocmd FileType mail,human set formatoptions+=ta textwidth=72
 
 " for C-like programming, have automatic indentation:
 autocmd FileType c,cpp,slang set cindent
@@ -111,7 +126,7 @@ autocmd FileType css set smartindent
 
 " for HTML, generally format text, but if a long line has been created leave it
 " alone when editing:
-autocmd FileType html set formatoptions+=tl
+"autocmd FileType html set formatoptions+=tl
 
 " for both CSS and HTML, use genuine tab characters for indentation, to make
 " files a few bytes smaller:
@@ -182,8 +197,8 @@ map! <F1> <C-C><F1>
 " * Keystrokes -- Formatting
 
 " have Q reformat the current paragraph (or selected text if there is any):
-nnoremap Q gqap
-vnoremap Q gq
+nnoremap Q gwap
+vnoremap Q gw
 
 " have the usual indentation keystrokes still work in visual mode:
 vnoremap <C-T> >

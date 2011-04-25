@@ -11,6 +11,9 @@ shopt -s checkwinsize
 if [ -f /etc/bashrc ] ; then 
   . /etc/bashrc
 fi
+if [ -f $HOME/.todo.cfg ] ; then
+  . $HOME/.todo.cfg
+fi
 if [ -f $HOME/.bash_aliases ] ; then
   . $HOME/.bash_aliases
 fi
@@ -60,18 +63,31 @@ function remove_path
 EDITOR=vi
 VISUAL=vi
 PAGER=less
+LESS="$LESS -R" #Allow colors
 SVN_EDITOR=vim
-export EDITOR VISUAL PAGER SVN_EDITOR
+export EDITOR VISUAL PAGER LESS SVN_EDITOR
 
 append_path $HOME/scripts
 append_path $HOME/bin
 
 MACHINE=${HOSTNAME%%[0-9]*}
 
-export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007";echo -ne $green ; date +"%x %r"; echo -ne "$NC"'
-#export PS1="\[\e]2;\u@\h:\w\007\e]1;\h\007\]\u@\h:\w\n> "
-export PS1="\[\e]2;\u@\h:\w\007\e]1;\h\007\]$RED\u@\h $BLUE\w$NC\n$ "
+#report_status()
+#{
+#  if [[ $? == 0 ]] ; then
+#    echo -ne "$GREEN:)$NC"
+#  else
+#    echo -ne "$RED:($NC"
+#      fi
+#}
+# Fix from http://wiki.archlinux.org/index.php/Talk:Color_Bash_Prompt
+RET_SUCCESS="$GREEN:)$NC"
+RET_FAILURE="$RED:($NC"
+
+export _PS1="\[\e]2;\u@\h:\w\007\e]1;\h\007\]$RED\u@\h $BLUE\w$NC\n"
 export PS2="$NC> "
+export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi; echo -ne $green ; date +"%x %r"; echo -ne "$NC"'
+#export PS1="\[\e]2;\u@\h:\w\007\e]1;\h\007\]\u@\h:\w\n> "
 
 function monitor {
   clear
@@ -99,10 +115,14 @@ export PATH=$GEM_HOME/bin:$PATH
 
 # Load Architecture and Machine-specific files
 if [ -d /proc/cray_xt ] ; then
-  if [ ! -f $(which mtarun) ] ; then
+  if [ -d /opt/xmt-tools ] ; then
     . $HOME/.bashrc.cray_xt
   fi
 fi
 if [ -f $HOME/.bashrc.$MACHINE ]; then
   . $HOME/.bashrc.$MACHINE
 fi
+export LOCKPRG=$SHELL
+
+# Workaround for getting clean zsh
+alias zsh="ssh -t $HOSTNAME /bin/zsh --login"

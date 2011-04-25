@@ -2,4 +2,5 @@ startup_message off
 hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{R}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{g}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
 #hardstatus string '%{= kG}[ %{R}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
-
+termcapinfo xterm*|rxvt*|kterm*|Eterm* ti@:te@
+altscreen on
