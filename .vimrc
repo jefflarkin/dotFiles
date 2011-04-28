@@ -100,8 +100,8 @@ filetype plugin on
 augroup filetype
   autocmd BufNewFile,BufRead */.Postponed/* set filetype=mail
   autocmd BufNewFile,BufRead *.txt set filetype=human formatoptions+=ta
-  autocmd BufNewFile,BufRead *.mkdn set filetype=mk formatoptions+=tad
-  autocmd BufNewFile,BufRead *.mkd set filetype=mk formatoptions+=tad
+  autocmd BufNewFile,BufRead *.mkdn set filetype=mk
+  autocmd BufNewFile,BufRead *.mkd set filetype=mk
   autocmd BufNewFile,BufRead *.cu set filetype=cpp
   autocmd BufNewFile,BufRead *.cuf set filetype=fortran
   autocmd BufNewFile,BufRead *.CUF set filetype=fortran
