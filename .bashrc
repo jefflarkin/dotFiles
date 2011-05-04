@@ -115,7 +115,7 @@ export PATH=$GEM_HOME/bin:$PATH
 
 # Load Architecture and Machine-specific files
 if [ -d /proc/cray_xt ] ; then
-  if [ -d /opt/xmt-tools ] ; then
+  if [ ! -d /opt/xmt-tools ] ; then
     . $HOME/.bashrc.cray_xt
   fi
 fi
