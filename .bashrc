@@ -107,22 +107,5 @@ function monitor {
   done
 }
 
-#export RUBYDIR=/ccs/apps/ruby186/
-export GEM_HOME=$HOME/gems/1.8
-export RUBYLIB=$HOME/scripts:$GEM_HOME/lib:$RUBYDIR/lib
-#export PATH=$GEM_HOME/bin:$RUBYDIR/bin:$PATH
-export PATH=$GEM_HOME/bin:$PATH
-
-# Load Architecture and Machine-specific files
-if [ -d /proc/cray_xt ] ; then
-  if [ -d /opt/xmt-tools ] ; then
-    . $HOME/.bashrc.cray_xt
-  fi
-fi
-if [ -f $HOME/.bashrc.$MACHINE ]; then
-  . $HOME/.bashrc.$MACHINE
-fi
 export LOCKPRG=$SHELL
 
-# Workaround for getting clean zsh
-alias zsh="ssh -t $HOSTNAME /bin/zsh --login"
