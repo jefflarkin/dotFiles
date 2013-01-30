@@ -86,7 +86,7 @@ RET_FAILURE="\[$RED\]:(\[$NC\]"
 
 export _PS1="\[$GREEN\]\D{%D %I:%M %p} ($PE_ENV)\n\[$RED\]\u@\h \[$BLUE\]\w\[$NC\]\n\[$BLUE\][\[$NC\]\!\[$BLUE\]]\[$NC\] "
 export PS2="$NC> "
-export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi; echo -e "\033k$MACHINE\033\\"'
+export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi;'
 #export PS1="\[\e]2;\u@\h:\w\007\e]1;\h\007\]\u@\h:\w\n> "
 
 function monitor {
@@ -108,4 +108,7 @@ function monitor {
 }
 
 export LOCKPRG=$SHELL
-
+echo -ne "\033]0;${MACHINE}\007"
+if [[ "$TERM" = "screen" ]] ; then
+  echo -ne "\033k${MACHINE}\033\\"
+fi
