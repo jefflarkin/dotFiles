@@ -81,12 +81,12 @@ MACHINE=${HOSTNAME%%[0-9]*}
 #      fi
 #}
 # Fix from http://wiki.archlinux.org/index.php/Talk:Color_Bash_Prompt
-RET_SUCCESS="$GREEN:)$NC"
-RET_FAILURE="$RED:($NC"
+RET_SUCCESS="\[$GREEN\]:)\[$NC\]"
+RET_FAILURE="\[$RED\]:(\[$NC\]"
 
-export _PS1="\[\e]2;\u@\h:\w\007\e]1;\h\007\]$RED\u@\h $BLUE\w$NC\n"
+export _PS1="\[$GREEN\]\D{%D %I:%M %p} ($PE_ENV)\n\[$RED\]\u@\h \[$BLUE\]\w\[$NC\]\n\[$BLUE\][\[$NC\]\!\[$BLUE\]]\[$NC\] "
 export PS2="$NC> "
-export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi; echo -ne $green ; date +"%x %r"; echo -ne "$NC"'
+export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi; echo -e "\033k$MACHINE\033\\"'
 #export PS1="\[\e]2;\u@\h:\w\007\e]1;\h\007\]\u@\h:\w\n> "
 
 function monitor {
