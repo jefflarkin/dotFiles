@@ -95,17 +95,17 @@ function _git_prompt() {
   fi
 }
 
-report_status()
-{
-  if [[ $? == 0 ]] ; then
-    echo -ne "$GREEN:)$NC"
-  else
-    echo -ne "$RED:($NC"
-  fi
-}
 # Fix from http://wiki.archlinux.org/index.php/Talk:Color_Bash_Prompt
 RET_SUCCESS="\[$GREEN\]:)\[$NC\]"
 RET_FAILURE="\[$RED\]:(\[$NC\]"
+function report_status()
+{
+  if [[ $? == 0 ]] ; then
+    echo -ne $RET_SUCCESS
+  else
+    echo -ne $RET_FAILURE
+  fi
+}
 
 export _PS1="\[$GREEN\]\D{%D %I:%M %p} (\$PE_ENV)\n\[$RED\]\u@\h \[$BLUE\]\w\[$NC\]\n\[$BLUE\][\[$NC\]\!\[$BLUE\]]\[$NC\] "
 #export _PS1="\[$GREEN\]\D{%D %I:%M %p} ($PE_ENV)\n\[\e]2;\u@\h:\w\007\e]1;\h\007\]\[$RED\]\u@\h \[$BLUE\]\w\[$NC\]\n\[$BLUE\][\[$NC\]\!\[$BLUE\]]\[$NC\] "
@@ -113,7 +113,8 @@ export _PS1="\[$GREEN\]\D{%D %I:%M %p} (\$PE_ENV)\n\[$RED\]\u@\h \[$BLUE\]\w\[$N
 #export PS1="${_PS1}\`if [ \$? = 0 ]; then echo \"$RET_SUCCESS\" ; else echo \"$RET_FAILURE\" ; fi\`"
 export PS2="\[$NC\]> "
 #export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export FACE="${RET_SUCCESS}"; else export FACE="${RET_FAILURE}"; fi;'
-export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}$(_git_prompt)${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi;'
+export PROMPT_COMMAND='_face=$(report_status);export PS1="${_PS1}$(_git_prompt)${_face} ";unset _face;'
+#export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}$(_git_prompt)${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi;'
 #export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi; echo -ne "\033k$MACHINE\033\\"'
 #export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi; echo -ne $green ; date +"%x %r"; echo -ne "$NC"'
 #export PROMPT_COMMAND='date +"%x %r"; echo -ne "$NC"'
