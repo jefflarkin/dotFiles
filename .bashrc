@@ -2,7 +2,7 @@
 [ -z "$PS1" ] && return
 
 # don't put duplicate lines in the history. See bash(1) for more options
-export HISTCONTROL=ignoredups
+export HISTCONTROL=ignoreboth:erasedups
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -72,21 +72,52 @@ append_path $HOME/bin
 
 MACHINE=${HOSTNAME%%[0-9]*}
 
-#report_status()
-#{
-#  if [[ $? == 0 ]] ; then
-#    echo -ne "$GREEN:)$NC"
-#  else
-#    echo -ne "$RED:($NC"
-#      fi
-#}
+# Taken from http://www.opinionatedprogrammer.com/2011/01/colorful-bash-prompt-reflecting-git-status/
+function _git_prompt() {
+  local git_status="`git status -unormal 2>&1`"
+  if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
+    if [[ "$git_status" =~ nothing\ to\ commit ]]; then
+      local ansi=$GREEN
+    elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
+      local ansi=$RED
+    else
+      local ansi=$YELLOW
+    fi
+    if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
+      branch=${BASH_REMATCH[1]}
+      #test "$branch" != master || branch=' '
+    else
+      # Detached HEAD.  (branch=HEAD is a faster alternative.)
+      branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
+                echo HEAD`)"
+    fi
+    echo -n '[\['"$ansi"'\]'"$branch"'\[\e[0m\]] '
+  fi
+}
+
 # Fix from http://wiki.archlinux.org/index.php/Talk:Color_Bash_Prompt
 RET_SUCCESS="\[$GREEN\]:)\[$NC\]"
 RET_FAILURE="\[$RED\]:(\[$NC\]"
+function report_status()
+{
+  if [[ $? == 0 ]] ; then
+    echo -ne $RET_SUCCESS
+  else
+    echo -ne $RET_FAILURE
+  fi
+}
 
-export _PS1="\[$GREEN\]\D{%D %I:%M %p} ($PE_ENV)\n\[$RED\]\u@\h \[$BLUE\]\w\[$NC\]\n\[$BLUE\][\[$NC\]\!\[$BLUE\]]\[$NC\] "
-export PS2="$NC> "
-export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi;'
+export _PS1="\[$GREEN\]\D{%D %I:%M %p} (\$PE_ENV)\n\[$RED\]\u@\h \[$BLUE\]\w\[$NC\]\n\[$BLUE\][\[$NC\]\!\[$BLUE\]]\[$NC\] "
+#export _PS1="\[$GREEN\]\D{%D %I:%M %p} ($PE_ENV)\n\[\e]2;\u@\h:\w\007\e]1;\h\007\]\[$RED\]\u@\h \[$BLUE\]\w\[$NC\]\n\[$BLUE\][\[$NC\]\!\[$BLUE\]]\[$NC\] "
+#export PS1="${_PS1}$(report_status) "
+#export PS1="${_PS1}\`if [ \$? = 0 ]; then echo \"$RET_SUCCESS\" ; else echo \"$RET_FAILURE\" ; fi\`"
+export PS2="\[$NC\]> "
+#export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export FACE="${RET_SUCCESS}"; else export FACE="${RET_FAILURE}"; fi;'
+export PROMPT_COMMAND='_face=$(report_status);export PS1="${_PS1}$(_git_prompt)${_face} ";unset _face;'
+#export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}$(_git_prompt)${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi;'
+#export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi; echo -ne "\033k$MACHINE\033\\"'
+#export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi; echo -ne $green ; date +"%x %r"; echo -ne "$NC"'
+#export PROMPT_COMMAND='date +"%x %r"; echo -ne "$NC"'
 #export PS1="\[\e]2;\u@\h:\w\007\e]1;\h\007\]\u@\h:\w\n> "
 
 function monitor {
@@ -112,9 +143,24 @@ echo -ne "\033]0;${MACHINE}\007"
 if [[ "$TERM" = "screen" ]] ; then
   echo -ne "\033k${MACHINE}\033\\"
 fi
+#export RUBYDIR=/ccs/apps/ruby186/
+export GEM_HOME=$HOME/gems/1.9
+export RUBYLIB=$HOME/scripts:$GEM_HOME/lib:$RUBYDIR/lib
+#export PATH=$GEM_HOME/bin:$RUBYDIR/bin:$PATH
+export PATH=$GEM_HOME/bin:$PATH
+export PERL5PATH=$PERL5PATH:$HOME/lib/perl
+
+# Load Architecture and Machine-specific files
+if [[ `env | grep -c CRAY` != "0" ]] ; then
+  if [ ! -d /opt/xmt-tools ] ; then
+    . $HOME/.bashrc.cray_xt
+  fi
+fi
 
 if [ -x $HOME/.rvm/scripts/rvm ] ; then
   source $HOME/.rvm/scripts/rvm
   PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 fi
 
+# Workaround for getting clean zsh
+#alias zsh="ssh -t $HOSTNAME /bin/zsh --login"
