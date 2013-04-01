@@ -112,3 +112,9 @@ echo -ne "\033]0;${MACHINE}\007"
 if [[ "$TERM" = "screen" ]] ; then
   echo -ne "\033k${MACHINE}\033\\"
 fi
+
+if [ -x $HOME/.rvm/scripts/rvm ] ; then
+  source $HOME/.rvm/scripts/rvm
+  PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+fi
+
