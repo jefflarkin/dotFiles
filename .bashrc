@@ -107,18 +107,13 @@ function report_status()
   fi
 }
 
-export _PS1="\[$GREEN\]\D{%D %I:%M %p} (\$PE_ENV)\n\[$RED\]\u@\h \[$BLUE\]\w\[$NC\]\n\[$BLUE\][\[$NC\]\!\[$BLUE\]]\[$NC\] "
-#export _PS1="\[$GREEN\]\D{%D %I:%M %p} ($PE_ENV)\n\[\e]2;\u@\h:\w\007\e]1;\h\007\]\[$RED\]\u@\h \[$BLUE\]\w\[$NC\]\n\[$BLUE\][\[$NC\]\!\[$BLUE\]]\[$NC\] "
-#export PS1="${_PS1}$(report_status) "
-#export PS1="${_PS1}\`if [ \$? = 0 ]; then echo \"$RET_SUCCESS\" ; else echo \"$RET_FAILURE\" ; fi\`"
+if [[ "$PE_ENV" != "" ]] ; then
+  export _PS1="\[$GREEN\]\D{%D %I:%M %p} (\$PE_ENV)\n\[$RED\]\u@\h \[$BLUE\]\w\[$NC\]\n\[$BLUE\][\[$NC\]\!\[$BLUE\]]\[$NC\] "
+else
+  export _PS1="\[$GREEN\]\D{%D %I:%M %p} \n\[$RED\]\u@\h \[$BLUE\]\w\[$NC\]\n\[$BLUE\][\[$NC\]\!\[$BLUE\]]\[$NC\] "
+fi
 export PS2="\[$NC\]> "
-#export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export FACE="${RET_SUCCESS}"; else export FACE="${RET_FAILURE}"; fi;'
 export PROMPT_COMMAND='_face=$(report_status);export PS1="${_PS1}$(_git_prompt)${_face} ";unset _face;'
-#export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}$(_git_prompt)${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi;'
-#export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi; echo -ne "\033k$MACHINE\033\\"'
-#export PROMPT_COMMAND='if [[ $? -eq 0 ]]; then export PS1="${_PS1}${RET_SUCCESS} "; else export PS1="${_PS1}${RET_FAILURE} "; fi; echo -ne $green ; date +"%x %r"; echo -ne "$NC"'
-#export PROMPT_COMMAND='date +"%x %r"; echo -ne "$NC"'
-#export PS1="\[\e]2;\u@\h:\w\007\e]1;\h\007\]\u@\h:\w\n> "
 
 function monitor {
   clear
@@ -143,10 +138,8 @@ echo -ne "\033]0;${MACHINE}\007"
 if [[ "$TERM" = "screen" ]] ; then
   echo -ne "\033k${MACHINE}\033\\"
 fi
-#export RUBYDIR=/ccs/apps/ruby186/
 export GEM_HOME=$HOME/gems/1.9
 export RUBYLIB=$HOME/scripts:$GEM_HOME/lib:$RUBYDIR/lib
-#export PATH=$GEM_HOME/bin:$RUBYDIR/bin:$PATH
 export PATH=$GEM_HOME/bin:$PATH
 export PERL5PATH=$PERL5PATH:$HOME/lib/perl
 
