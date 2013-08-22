@@ -160,3 +160,4 @@ fi
 
 # Workaround for getting clean zsh
 #alias zsh="ssh -t $HOSTNAME /bin/zsh --login"
+export TZ="America/New_York"
