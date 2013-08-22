@@ -37,3 +37,6 @@ if [ -x $VIM ] ; then
 fi
 alias f.='find . -name $1'
 alias :q="echo \"Doh, You're not in vi any more.\""
+if [ -x $(which qstat) ] ; then
+  alias ql='qstat -u $USER'
+fi

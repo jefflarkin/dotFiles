@@ -112,3 +112,4 @@ echo -ne "\033]0;${MACHINE}\007"
 if [[ "$TERM" = "screen" ]] ; then
   echo -ne "\033k${MACHINE}\033\\"
 fi
+export TZ="America/New_York"
