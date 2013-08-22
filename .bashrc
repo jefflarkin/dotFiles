@@ -147,7 +147,7 @@ export PATH=$GEM_HOME/bin:$PATH
 export PERL5PATH=$PERL5PATH:$HOME/lib/perl
 
 # Load Architecture and Machine-specific files
-if [[ `env | grep -c CRAY` != "0" ]] ; then
+if [[ `env | grep -c CRAY` != "0" && -f $HOME/.bashrc.cray_xt  ]] ; then
   if [ ! -d /opt/xmt-tools ] ; then
     . $HOME/.bashrc.cray_xt
   fi
