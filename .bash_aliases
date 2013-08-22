@@ -37,3 +37,5 @@ if [ -x $VIM ] ; then
 fi
 alias f.='find . -name $1'
 alias :q="echo \"Doh, You're not in vi any more.\""
+# Short Hash from Git
+alias gitsh='git rev-parse --short HEAD'
