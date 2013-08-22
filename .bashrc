@@ -22,6 +22,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 elif [ -f $HOME/scripts/bash_completion ] ; then
   . $HOME/scripts/bash_completion
 fi
+if [ -f $HOME/.bashrc.local ] ; then
+  . $HOME/.bashrc.local
+fi
 
 export CDPATH=.:$HOME:..
 
