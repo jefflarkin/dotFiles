@@ -157,3 +157,7 @@ fi
 
 # Workaround for getting clean zsh
 #alias zsh="ssh -t $HOSTNAME /bin/zsh --login"
+function wintitle()
+{
+  echo -en '\033];' $1 '\007'
+}
