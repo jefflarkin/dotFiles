@@ -6,7 +6,7 @@
 " 2000 Jun  1: for `Vim' 5.6
 " first clear any existing autocommands:
 autocmd!
-"colors "torte"
+colors torte
 let fortran_free_source=1
 unlet! fortran_fixed_source
 let fortran_fold=1
@@ -445,3 +445,8 @@ endfunction " RepeatTag()
 
 
 " end of Smylers's .vimrc
+  filetype off
+  filetype plugin indent off
+  set runtimepath+=$GOROOT/misc/vim
+  filetype plugin indent on
+  syntax on

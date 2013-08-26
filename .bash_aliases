@@ -37,8 +37,15 @@ if [ -x $VIM ] ; then
 fi
 alias f.='find . -name $1'
 alias :q="echo \"Doh, You're not in vi any more.\""
+<<<<<<< HEAD:.bash_aliases
 
 QSTAT=`which qstat`
 if [ -x $QSTAT ] ; then
   alias ql="qstat -u $USER"
+=======
+# Short Hash from Git
+alias gitsh='git rev-parse --short HEAD'
+if [ -x $(which qstat &> /dev/null) ] ; then
+  alias ql='qstat -u $USER'
+>>>>>>> 41cd10adae0581528d7d8d190f816a782d9068a3:.bash_aliases
 fi
