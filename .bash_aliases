@@ -43,3 +43,4 @@ if [ -x `which qstat &>/dev/null` ] ; then
 fi
 # Short Hash from Git
 alias gitsh='git rev-parse --short HEAD'
+alias todo=todo.sh

@@ -69,7 +69,7 @@ set autoindent
 
 " normally don't automatically format `text' as it is typed, IE only do this
 " with comments, at 79 characters:
-set formatoptions-=t
+set formatoptions-=ta
 set textwidth=79
 
 " get rid of the default style of C comments, and define a style with two stars
@@ -99,16 +99,17 @@ filetype plugin on
 " properly]:
 augroup filetype
   autocmd BufNewFile,BufRead */.Postponed/* set filetype=mail
-  autocmd BufNewFile,BufRead *.txt set filetype=human formatoptions+=ta
-  autocmd BufNewFile,BufRead *.mkdn set filetype=mk
-  autocmd BufNewFile,BufRead *.mkd set filetype=mk
+  autocmd BufNewFile,BufRead *.txt set filetype=human
+  "autocmd BufNewFile,BufRead *.txt set filetype=human formatoptions+=ta
+  autocmd BufNewFile,BufRead *.mkdn set filetype=mkd
+  autocmd BufNewFile,BufRead *.mkd set filetype=mkd
   autocmd BufNewFile,BufRead *.cu set filetype=cpp
   autocmd BufNewFile,BufRead *.cuf set filetype=fortran
   autocmd BufNewFile,BufRead *.CUF set filetype=fortran
 augroup END
 
 " in human-language files, automatically format everything at 72 chars:
-autocmd FileType mail,human set formatoptions+=ta textwidth=72
+" autocmd FileType mail,human set formatoptions+=ta textwidth=72
 
 " for C-like programming, have automatic indentation:
 autocmd FileType c,cpp,slang set cindent
