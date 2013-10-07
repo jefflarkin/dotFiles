@@ -6,7 +6,7 @@
 " 2000 Jun  1: for `Vim' 5.6
 " first clear any existing autocommands:
 autocmd!
-"colors "torte"
+colors torte
 let fortran_free_source=1
 unlet! fortran_fixed_source
 let fortran_fold=1
