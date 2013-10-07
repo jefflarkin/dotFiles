@@ -37,6 +37,10 @@ if [ -x $VIM ] ; then
 fi
 alias f.='find . -name $1'
 alias :q="echo \"Doh, You're not in vi any more.\""
-if [ -x $(which qstat) ] ; then
-  alias ql='qstat -u $USER'
+
+if [ -x `which qstat &>/dev/null` ] ; then
+  alias ql="qstat -u $USER"
 fi
+# Short Hash from Git
+alias gitsh='git rev-parse --short HEAD'
+alias todo=todo.sh
