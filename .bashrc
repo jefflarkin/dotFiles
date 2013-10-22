@@ -167,4 +167,6 @@ function wintitle()
 export TZ="America/New_York"
 
 # added by Anaconda 1.7.0 installer
-export PATH="/home/jlarkin/local/anaconda/bin:$PATH"
+if [ -d $HOME/local/anaconda ] ; then
+  export PATH="$PATH:$HOME/local/anaconda/bin"
+fi
