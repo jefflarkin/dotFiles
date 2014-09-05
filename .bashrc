@@ -165,3 +165,8 @@ function wintitle()
   echo -en '\033];' $1 '\007'
 }
 export TZ="America/New_York"
+
+# added by Anaconda 1.7.0 installer
+if [ -d $HOME/local/anaconda ] ; then
+  export PATH="$PATH:$HOME/local/anaconda/bin"
+fi
