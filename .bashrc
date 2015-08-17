@@ -170,3 +170,10 @@ export TZ="America/New_York"
 if [ -d $HOME/local/anaconda ] ; then
   export PATH="$PATH:$HOME/local/anaconda/bin"
 fi
+
+export NVM_DIR="/home/larkin/.nvm"
+if [ -d $NVM_DIR ] ; then
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+else 
+  unset NVM_DIR
+fi
