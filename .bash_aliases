@@ -44,3 +44,6 @@ fi
 # Short Hash from Git
 alias gitsh='git rev-parse --short HEAD'
 alias todo=todo.sh
+
+alias lsoldkernels=lsoldkernels.sh
+alias rmoldkernels=rmoldkernels.sh
