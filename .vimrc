@@ -232,25 +232,25 @@ inoremap <S-Tab> <C-D>
 
 " \hc ("HTML close") inserts the tag needed to close the current HTML construct
 " [function at end of file]:
-nnoremap \hc :call InsertCloseTag()<CR>
-imap <F8> <Space><BS><Esc>\hca
+" nnoremap \hc :call InsertCloseTag()<CR>
+" imap <F8> <Space><BS><Esc>\hca
 
 " \hp ("HTML previous") copies the previous (non-closing) HTML tag in full,
 " including attributes; repeating this straight away removes that tag and
 " copies the one before it [function at end of file]:
-nnoremap \hp :call RepeatTag(0)<CR>
-imap <F9> <Space><BS><Esc>\hpa
+" nnoremap \hp :call RepeatTag(0)<CR>
+" imap <F9> <Space><BS><Esc>\hpa
 " \hn ("HTML next") does the same thing, but copies the next tag; so \hp and
 " \hn can be used to cycle backwards and forwards through the tags in the file
 " (like <Ctrl>+P and <Ctrl>+N do for insert mode completion):
-nnoremap \hn :call RepeatTag(1)<CR>
-imap <F10> <Space><BS><Esc>\hna
+" nnoremap \hn :call RepeatTag(1)<CR>
+" imap <F10> <Space><BS><Esc>\hna
 
 " there are other key mappings that it's useful to have for typing HTML
 " character codes, but that are definitely not wanted in other files (unlike
 " the above, which won't do any harm), so only map these when entering an HTML
 " file and unmap them on leaving it:
-autocmd BufEnter * if &filetype == "html" | call MapHTMLKeys() | endif
+" autocmd BufEnter * if &filetype == "html" | call MapHTMLKeys() | endif
 function! MapHTMLKeys(...)
 " sets up various insert mode key mappings suitable for typing HTML, and
 " automatically removes them when switching to a non-HTML buffer

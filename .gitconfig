@@ -1,5 +1,6 @@
 [user]
   name = Jeff Larkin
+	email = jefflarkin@gmail.com
 [alias] 
   tree = log --oneline --graph --color --all --decorate
   color = log --graph --full-history --all --color --pretty=tformat:"%x1b[31m%h%x1b[0m%x20[%ad]%x20%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m"

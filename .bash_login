@@ -1,7 +1,7 @@
 if [[ "$PBS_O_WORKDIR" == "" ]] ; then
-  if [[ -x `which qstat 2>/dev/null` ]] ; then
-    echo -e "\e[1;33m$(screen -ls)$(ql)\e[0m"
-  else
-    echo -e "\e[1;33m$(screen -ls)\e[0m"
+  echo -en "\e[1;33m$(screen -ls)"
+  if [[ "$(which qstat)" != "" ]] ; then
+  echo -en "$(ql)"
   fi
+  echo -e "\e[0m"
 fi
