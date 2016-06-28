@@ -1,7 +1,10 @@
 if [[ "$PBS_O_WORKDIR" == "" ]] ; then
-  echo -en "\e[1;33m$(screen -ls)"
-  if [[ "$(which qstat)" != "" ]] ; then
-  echo -en "$(ql)"
+  if [[ -x `which qstat 2>/dev/null` ]] ; then
+    echo -e "\e[1;33m$(screen -ls)$(ql)\e[0m"
+  elif [[ -x `which squeue 2> /dev/null` ]] ; then
+    echo -e "\e[1;33m$(screen -ls)$(squeue -u $USER)\e[0m"
+  else
+    echo -e "\e[1;33m$(screen -ls)\e[0m"
   fi
   echo -e "\e[0m"
 fi

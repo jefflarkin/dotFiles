@@ -106,6 +106,16 @@ augroup filetype
   autocmd BufNewFile,BufRead *.cu set filetype=cpp
   autocmd BufNewFile,BufRead *.cuf set filetype=fortran
   autocmd BufNewFile,BufRead *.CUF set filetype=fortran
+  autocmd BufNewFile,BufRead *.f set filetype=fortran
+  autocmd BufNewFile,BufRead *.F set filetype=fortran
+  autocmd BufNewFile,BufRead *.f77 set filetype=fortran
+  autocmd BufNewFile,BufRead *.F77 set filetype=fortran
+  autocmd BufNewFile,BufRead *.f90 set filetype=fortran
+  autocmd BufNewFile,BufRead *.F90 set filetype=fortran
+  autocmd BufNewFile,BufRead *.f03 set filetype=fortran
+  autocmd BufNewFile,BufRead *.F03 set filetype=fortran
+  autocmd BufNewFile,BufRead *.f08 set filetype=fortran
+  autocmd BufNewFile,BufRead *.F08 set filetype=fortran
 augroup END
 
 " in human-language files, automatically format everything at 72 chars:
