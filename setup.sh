@@ -15,9 +15,10 @@ for f in .[a-zA-Z]* ; do
 done
 cd $HOME
 cp $OLDPWD/.gitconfig .
-if [ ! -x $HOME/scripts ] ; then
-  ln -s $OLDPWD/scripts scripts
-fi
+if [ ! -d $HOME/scripts ] ; then mkdir $HOME/scripts ; fi
+for f in $OLDPWD/scripts/* ; do
+  ln -s $f scripts
+done
 if [ ! -d $HOME/src ] ; then mkdir $HOME/src ; fi
 for f in $OLDPWD/src/* ; do
   ln -s $f src
