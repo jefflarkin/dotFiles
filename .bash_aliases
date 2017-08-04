@@ -39,8 +39,10 @@ alias f.='find . -name $1'
 alias :q="echo \"Doh, You're not in vi any more.\""
 alias :wq="echo \"Doh, You're not in vi any more.\""
 
-if [ -x `which qstat &>/dev/null` ] ; then
+if [ "$(which qstat 2>/dev/null)" != "" ] ; then
   alias ql="qstat -u $USER"
+elif [ "$(which squeue 2> /dev/null)" != "" ] ; then
+  alias ql="squeue -u $USER"
 fi
 # Short Hash from Git
 alias gitsh='git rev-parse --short HEAD'
@@ -48,3 +50,5 @@ alias todo=todo.sh
 
 alias lsoldkernels=lsoldkernels.sh
 alias rmoldkernels=rmoldkernels.sh
+TMUX=$(which tmux 2> /dev/null)
+if [[ "$TMUX" != "" ]] ; then alias tmux="$TMUX a || $TMUX" ; fi
