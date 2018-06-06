@@ -179,3 +179,8 @@ if [ -d $NVM_DIR ] ; then
 else 
   unset NVM_DIR
 fi
+
+function sshtm()
+{
+  ssh -t $* "tmux a || tmux"
+}
