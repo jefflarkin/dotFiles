@@ -50,3 +50,5 @@ alias todo=todo.sh
 
 alias lsoldkernels=lsoldkernels.sh
 alias rmoldkernels=rmoldkernels.sh
+TMUX=$(which tmux 2> /dev/null)
+if [[ "$TMUX" != "" ]] ; then alias tmux="$TMUX a || $TMUX" ; fi

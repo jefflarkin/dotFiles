@@ -77,24 +77,26 @@ MACHINE=${HOSTNAME%%[0-9]*}
 
 # Taken from http://www.opinionatedprogrammer.com/2011/01/colorful-bash-prompt-reflecting-git-status/
 function _git_prompt() {
-  local git_status="`git status -unormal 2>&1`"
-  if ! [[ "$git_status" =~ fatal ]]; then
-    if [[ "$git_status" =~ nothing\ to\ commit ]]; then
-      local ansi=$GREEN
-    elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
-      local ansi=$RED
-    else
-      local ansi=$YELLOW
+  if [[ "$(which git 2> /dev/null)" != "" ]] ; then
+    local git_status="`git status -unormal 2>&1`"
+    if ! [[ "$git_status" =~ fatal ]]; then
+      if [[ "$git_status" =~ nothing\ to\ commit ]]; then
+        local ansi=$GREEN
+      elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
+        local ansi=$RED
+      else
+        local ansi=$YELLOW
+      fi
+      if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
+        branch=${BASH_REMATCH[1]}
+        #test "$branch" != master || branch=' '
+      else
+        # Detached HEAD.  (branch=HEAD is a faster alternative.)
+        branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
+                  echo HEAD`)"
+      fi
+      echo -n '[\['"$ansi"'\]'"$branch"'\[\e[0m\]] '
     fi
-    if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
-      branch=${BASH_REMATCH[1]}
-      #test "$branch" != master || branch=' '
-    else
-      # Detached HEAD.  (branch=HEAD is a faster alternative.)
-      branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null ||
-                echo HEAD`)"
-    fi
-    echo -n '[\['"$ansi"'\]'"$branch"'\[\e[0m\]] '
   fi
 }
 
@@ -177,3 +179,8 @@ else
   unset NVM_DIR
 fi
 export LMOD_PAGER="cat"
+
+function sshtm()
+{
+  ssh -t $* "tmux a || tmux"
+}
