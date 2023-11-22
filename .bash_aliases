@@ -39,8 +39,10 @@ alias f.='find . -name $1'
 alias :q="echo \"Doh, You're not in vi any more.\""
 alias :wq="echo \"Doh, You're not in vi any more.\""
 
-if [ -x `which qstat &>/dev/null` ] ; then
+if hash qstat &>/dev/null ; then
   alias ql="qstat -u $USER"
+elif hash squeue &> /dev/null ; then
+  alias ql="squeue -l -u $USER"
 fi
 # Short Hash from Git
 alias gitsh='git rev-parse --short HEAD'

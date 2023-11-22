@@ -78,7 +78,7 @@ MACHINE=${HOSTNAME%%[0-9]*}
 # Taken from http://www.opinionatedprogrammer.com/2011/01/colorful-bash-prompt-reflecting-git-status/
 function _git_prompt() {
   local git_status="`git status -unormal 2>&1`"
-  if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
+  if ! [[ "$git_status" =~ fatal ]]; then
     if [[ "$git_status" =~ nothing\ to\ commit ]]; then
       local ansi=$GREEN
     elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
@@ -141,11 +141,6 @@ echo -ne "\033]0;${MACHINE}\007"
 if [[ "$TERM" = "screen" ]] ; then
   echo -ne "\033k${MACHINE}\033\\"
 fi
-export GEM_HOME=$HOME/gems/1.9
-export RUBYLIB=$HOME/scripts:$GEM_HOME/lib:$RUBYDIR/lib
-export PATH=$GEM_HOME/bin:$PATH
-export PERL5PATH=$PERL5PATH:$HOME/lib/perl
-
 # Load Architecture and Machine-specific files
 if [[ `env | grep -c CRAY` != "0" && -f $HOME/.bashrc.cray_xt  ]] ; then
   if [ ! -d /opt/xmt-tools ] ; then
@@ -171,9 +166,14 @@ if [ -d $HOME/local/anaconda ] ; then
   export PATH="$PATH:$HOME/local/anaconda/bin"
 fi
 
+if [ -d $HOME/local/bin ] ; then
+  export PATH="$PATH:$HOME/local/bin"
+fi
+
 export NVM_DIR="/home/larkin/.nvm"
 if [ -d $NVM_DIR ] ; then
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 else 
   unset NVM_DIR
 fi
+export LMOD_PAGER="cat"
