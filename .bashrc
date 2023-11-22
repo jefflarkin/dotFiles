@@ -174,7 +174,11 @@ if [ -d $HOME/local/anaconda ] ; then
 fi
 
 if [ -d $HOME/local/bin ] ; then
+<<<<<<< HEAD
   export PATH="$HOME/local/bin:$PATH"
+=======
+  export PATH="$PATH:$HOME/local/bin"
+>>>>>>> 0facf1e (Rebase merge)
 fi
 
 export NVM_DIR="$HOME/.nvm"
@@ -185,4 +189,3 @@ else
   unset NVM_DIR
 fi
 export LMOD_PAGER="cat"
-
