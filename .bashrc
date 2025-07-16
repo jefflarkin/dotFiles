@@ -163,6 +163,11 @@ function wintitle()
 }
 export TZ="America/New_York"
 
+function sshtm()
+{
+  ssh -t $* "tmux a || tmux"
+}
+
 # added by Anaconda 1.7.0 installer
 if [ -d $HOME/local/anaconda ] ; then
   export PATH="$PATH:$HOME/local/anaconda/bin"
@@ -172,7 +177,7 @@ if [ -d $HOME/local/bin ] ; then
   export PATH="$PATH:$HOME/local/bin"
 fi
 
-export NVM_DIR="/home/larkin/.nvm"
+export NVM_DIR="$HOME/.nvm"
 if [ -d $NVM_DIR ] ; then
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 else 
@@ -180,7 +185,4 @@ else
 fi
 export LMOD_PAGER="cat"
 
-function sshtm()
-{
-  ssh -t $* "tmux a || tmux"
-}
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
