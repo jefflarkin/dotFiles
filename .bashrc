@@ -174,7 +174,7 @@ if [ -d $HOME/local/anaconda ] ; then
 fi
 
 if [ -d $HOME/local/bin ] ; then
-  export PATH="$PATH:$HOME/local/bin"
+  export PATH="$HOME/local/bin:$PATH"
 fi
 
 export NVM_DIR="$HOME/.nvm"
